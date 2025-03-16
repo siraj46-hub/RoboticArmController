@@ -1,0 +1,41 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robotic Arm Control</title>
+    <script>
+        function sendJoystickData(servo, value) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "http://192.168.1.3/move?servo=" + servo + "&angle=" + value, true);
+            xhr.send();
+        }
+
+        function handleJoystick(event, servo) {
+            let value = Math.floor((event.target.value / 100) * 180); // Convert 0-100 range to 0-180 degrees
+            sendJoystickData(servo, value);
+        }
+    </script>
+</head>
+<body>
+    <h2>Robotic Arm Control</h2>
+
+    <label>Base Rotation</label>
+    <input type="range" min="0" max="100" oninput="handleJoystick(event, 'x')"><br>
+
+    <label>Shoulder</label>
+    <input type="range" min="0" max="100" oninput="handleJoystick(event, 'y')"><br>
+
+    <label>Elbow</label>
+    <input type="range" min="0" max="100" oninput="handleJoystick(event, 'z')"><br>
+
+    <label>Wrist</label>
+    <input type="range" min="0" max="100" oninput="handleJoystick(event, 'wrist')"><br>
+
+    <label>Wrist Rotation</label>
+    <input type="range" min="0" max="100" oninput="handleJoystick(event, 'wristRotate')"><br>
+
+    <label>Gripper</label>
+    <input type="range" min="0" max="100" oninput="handleJoystick(event, 'grip')"><br>
+</body>
+</html>
